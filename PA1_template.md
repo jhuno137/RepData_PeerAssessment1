@@ -1,13 +1,9 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 ## Loading and preprocessing the data
 
-```{r read_data, echo=TRUE}
+
+```r
 steps <- read.csv('data/activity.csv')
 
 # date as Dates
@@ -18,11 +14,19 @@ steps$interval <- as.factor(steps$interval)
 str(steps)
 ```
 
+```
+## 'data.frame':	17568 obs. of  3 variables:
+##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ date    : Date, format: "2012-10-01" "2012-10-01" ...
+##  $ interval: Factor w/ 288 levels "0","5","10","15",..: 1 2 3 4 5 6 7 8 9 10 ...
+```
+
 ## What is mean total number of steps taken per day?
 
 To answer this question we will aggregate the steps count by date
 
-```{r daily_steps,echo=TRUE}
+
+```r
 steps.daily <- setNames(
     aggregate(
         x=steps$steps,
@@ -39,21 +43,36 @@ hist(steps.daily$count,
      main="Histogram of daily step count",
      col="wheat3"
      )
+```
 
+![](PA1_template_files/figure-html/daily_steps-1.png)
+
+```r
 # mean number of daily steps
 mean.na <- mean(steps.daily$count)  
 print(mean.na)
+```
+
+```
+## [1] 9354.23
+```
+
+```r
 # median number of daily steps
 median.na <- median(steps.daily$count)  
 print(median.na)
+```
+
+```
+## [1] 10395
 ```
 
 ## What is the average daily activity pattern?
 
 We will first make a time series plot of the 5-minute interval and the average number of steps taken, averaged across all days
 
-```{r timeseries, echo=TRUE}
 
+```r
 # average steps by interval
 steps.interval <- setNames(
     aggregate(
@@ -64,7 +83,19 @@ steps.interval <- setNames(
 )
 
 head(steps.interval)
+```
 
+```
+##   interval meanSteps
+## 1        0 1.7169811
+## 2        5 0.3396226
+## 3       10 0.1320755
+## 4       15 0.1509434
+## 5       20 0.0754717
+## 6       25 2.0943396
+```
+
+```r
 # time series plot
 with(steps.interval,
      plot(
@@ -76,10 +107,18 @@ with(steps.interval,
          main = "Mean number of steps by interval"))
 ```
 
+![](PA1_template_files/figure-html/timeseries-1.png)
+
 The interval which contains on average the maximum number of steps in the dataset is:
 
-```{r max-by-interval, echo=TRUE}
+
+```r
 steps.interval[which.max(steps.interval$meanSteps),]
+```
+
+```
+##     interval meanSteps
+## 104      835  206.1698
 ```
 
 ## Imputing missing values
@@ -87,14 +126,20 @@ steps.interval[which.max(steps.interval$meanSteps),]
 The presence of missing days may introduce bias into some calculations or summaries of the data.  
 
 The number of missing values in the dataset is
-```{r missing_values,echo=TRUE}
+
+```r
 sum(is.na(steps))
+```
+
+```
+## [1] 2304
 ```
 
 To eliminate the possible bias effect of the presence of missing values 
 we will fill in these missing values with the average number for the corresponding interval slot rounded to the nearest integer
 
-```{r filling_missing_values,echo=TRUE}
+
+```r
 steps.nona <- steps
 
 steps.nona$steps <- 
@@ -105,10 +150,20 @@ steps.nona$steps <-
 head(steps.nona)
 ```
 
+```
+##   steps       date interval
+## 1     2 2012-10-01        0
+## 2     0 2012-10-01        5
+## 3     0 2012-10-01       10
+## 4     0 2012-10-01       15
+## 5     0 2012-10-01       20
+## 6     2 2012-10-01       25
+```
+
 Now lets look if by filling in the missing values have modified the distribution of number of steps taken daily
 
-```{r histogram_2 , echo=TRUE}
 
+```r
 steps.nona.daily <- setNames(
     aggregate(
         x=steps.nona$steps,
@@ -126,20 +181,35 @@ hist(
     col="wheat3")
 ```
 
+![](PA1_template_files/figure-html/histogram_2 -1.png)
+
 The mean and median number of steps are
 
-```{r mean_and_median2,echo=TRUE}
+
+```r
 mean.nona <- mean(steps.nona.daily$count)
 print(mean.nona)
+```
+
+```
+## [1] 10765.64
+```
+
+```r
 median.nona <- median(steps.nona.daily$count)
 print(median.nona)
+```
+
+```
+## [1] 10762
 ```
 
 By filling in the missing values, the frequency for zero count of steps has decreased. The distribution is no longer skewed given that the mean is (practically speaking) equal to the median.
 
 The differences between average and median daily counts for the datasets with filled in missing values are summarized in the following table:
 
-```{r differences,echo=TRUE}
+
+```r
 diff <- 
     data.frame(
         "With.NAs"=c(mean.na, median.na),
@@ -151,11 +221,17 @@ row.names(diff) <- c("Mean","Median")
 knitr::kable(diff)
 ```
 
+          With.NAs   Without.NAs   Difference
+-------  ---------  ------------  -----------
+Mean       9354.23         10395      1411.41
+Median    10395.00         10762       367.00
+
 ## Are there differences in activity patterns between weekdays and weekends?
 
 First we'll create a factor variable to differentiate between weekdays and weekens
 
-```{r, weekday_factor, echo=TRUE}
+
+```r
 steps$weekdayf <- ifelse(
     grepl("Saturday|Sunday",weekdays(steps$date)),
     "weekend",
@@ -165,7 +241,8 @@ steps$weekdayf <- ifelse(
 
 Second we will calculate the mean number of steps by interval and weekday
 
-```{r weekday_aggregate, echo=TRUE}
+
+```r
 steps.weekdayf <-
     setNames(
         aggregate(
@@ -177,10 +254,21 @@ steps.weekdayf <-
     )
 head(steps.weekdayf)
 ```
+
+```
+##   interval weekdayf meanSteps
+## 1        0  weekday 2.3333333
+## 2        5  weekday 0.4615385
+## 3       10  weekday 0.1794872
+## 4       15  weekday 0.2051282
+## 5       20  weekday 0.1025641
+## 6       25  weekday 1.5128205
+```
 Finally we will make a multipanel plot to show the average 
 number of steps for each interval by weekday
 
-```{r latticeplot, echo=TRUE}
+
+```r
 library(lattice)
 # interval as numeric
 steps.weekdayf$interval <- 
@@ -199,6 +287,8 @@ xyplot(meanSteps ~ interval | weekdayf,
            panel.grid()
        })
 ```
+
+![](PA1_template_files/figure-html/latticeplot-1.png)
 
 
 
