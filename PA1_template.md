@@ -209,10 +209,30 @@ By filling in the missing values, the frequency for zero count of steps has decr
 The differences between average and median daily counts for the datasets with 
 filled in missing values are summarized in the following table:
 
-||With NAs|Without NAs|Difference|  
-|-|--------|:---------:|:-------:|  
-|Median|10395|10762|367|  
-|Mean | 9354 |10765 | 1411|  
+
+```r
+diff <- 
+    data.frame(
+        "steps"=c(mean.na, median.na),
+        "steps.nona"=c(median.na, median.nona), 
+        "difference"=c(mean.nona - mean.na, median.nona - median.na)
+    )
+row.names(diff) <- c("mean","median")
+
+library(xtable)
+xt <- xtable(diff)
+print(xt,type="html",html.table.attributes='border=1 cellpadding="5" cellspacing="5"')
+```
+
+<!-- html table generated in R 3.2.4 by xtable 1.8-2 package -->
+<!-- Mon May 23 21:53:48 2016 -->
+<table border=1 cellpadding="5" cellspacing="5">
+<tr> <th>  </th> <th> steps </th> <th> steps.nona </th> <th> difference </th>  </tr>
+  <tr> <td align="right"> mean </td> <td align="right"> 9354.23 </td> <td align="right"> 10395.00 </td> <td align="right"> 1411.41 </td> </tr>
+  <tr> <td align="right"> median </td> <td align="right"> 10395.00 </td> <td align="right"> 10762.00 </td> <td align="right"> 367.00 </td> </tr>
+   </table>
+
+
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
