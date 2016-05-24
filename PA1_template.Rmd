@@ -151,7 +151,7 @@ row.names(diff) <- c("mean","median")
 
 library(xtable)
 xt <- xtable(diff)
-print(xt,type="html",html.table.attributes='border=1 cellpadding="5" cellspacing="5"')
+print(xt,type="html",html.table.attributes='border="0" cellpadding="5" cellspacing="5"')
 ```
 
 

@@ -221,12 +221,12 @@ row.names(diff) <- c("mean","median")
 
 library(xtable)
 xt <- xtable(diff)
-print(xt,type="html",html.table.attributes='border=1 cellpadding="5" cellspacing="5"')
+print(xt,type="html",html.table.attributes='border="0" cellpadding="5" cellspacing="5"')
 ```
 
 <!-- html table generated in R 3.2.4 by xtable 1.8-2 package -->
-<!-- Mon May 23 21:53:48 2016 -->
-<table border=1 cellpadding="5" cellspacing="5">
+<!-- Mon May 23 21:55:43 2016 -->
+<table border="0" cellpadding="5" cellspacing="5">
 <tr> <th>  </th> <th> steps </th> <th> steps.nona </th> <th> difference </th>  </tr>
   <tr> <td align="right"> mean </td> <td align="right"> 9354.23 </td> <td align="right"> 10395.00 </td> <td align="right"> 1411.41 </td> </tr>
   <tr> <td align="right"> median </td> <td align="right"> 10395.00 </td> <td align="right"> 10762.00 </td> <td align="right"> 367.00 </td> </tr>
