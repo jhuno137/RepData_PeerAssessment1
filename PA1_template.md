@@ -206,25 +206,14 @@ print(median.nona)
 
 By filling in the missing values, the frequency for zero count of steps has decreased. The distribution is no longer skewed given that the mean is (practically speaking) equal to the median.
 
-The differences between average and median daily counts for the datasets with filled in missing values are summarized in the following table:
+The differences between average and median daily counts for the datasets with 
+filled in missing values are summarized in the following table:
 
+||With NAs|Without NAs|Difference|
+|-|--------|:---------:|:-------:|
+|Median|10395|10762|367|
+|Mean | 9354 |10765 | 1411|
 
-```r
-diff <- 
-    data.frame(
-        "With.NAs"=c(mean.na, median.na),
-        "Without.NAs"=c(median.na, median.nona), 
-        "Difference"=c(mean.nona - mean.na, median.nona - median.na)
-    )
-row.names(diff) <- c("Mean","Median")
-            
-knitr::kable(diff)
-```
-
-          With.NAs   Without.NAs   Difference
--------  ---------  ------------  -----------
-Mean       9354.23         10395      1411.41
-Median    10395.00         10762       367.00
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
