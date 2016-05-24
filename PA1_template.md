@@ -209,11 +209,10 @@ By filling in the missing values, the frequency for zero count of steps has decr
 The differences between average and median daily counts for the datasets with 
 filled in missing values are summarized in the following table:
 
-||With NAs|Without NAs|Difference|
-|-|--------|:---------:|:-------:|
-|Median|10395|10762|367|
-|Mean | 9354 |10765 | 1411|
-
+||With NAs|Without NAs|Difference|  
+|-|--------|:---------:|:-------:|  
+|Median|10395|10762|367|  
+|Mean | 9354 |10765 | 1411|  
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
